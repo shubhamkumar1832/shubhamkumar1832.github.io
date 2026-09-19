@@ -29,9 +29,10 @@ body {
   --reveal-x: -999px;
   --reveal-y: -999px;
   --reveal-radius: 0px;
-  /* Text colour on the mobile portrait. Flip to var(--ink) if your mobile
-     image is pale where the copy sits. */
-  --mobile-copy: #ffffff;
+  /* Text colours on the mobile portrait. Light over dark areas (hair),
+     ink over light areas (shirt). Adjust if you change the mobile images. */
+  --mobile-light: #ffffff;
+  --mobile-dark: var(--ink);
 
   position: relative;
   isolation: isolate;
@@ -225,6 +226,11 @@ body {
   letter-spacing: 0.04em;
 }
 
+.monogram {
+  color: var(--ink);   /* stays dark even when the name text turns light on mobile */
+  flex: none;
+}
+
 .nav-links {
   display: flex;
   gap: 1.5rem;
@@ -344,6 +350,13 @@ body {
     width: 62%;
     font-size: clamp(2.7rem, 12.5vw, 3.8rem);
     line-height: 0.87;
+    color: var(--mobile-light);
+    text-shadow: 0 1px 18px rgba(8, 16, 32, 0.35);
+  }
+
+  .brand {
+    color: var(--mobile-light);
+    text-shadow: 0 1px 12px rgba(8, 16, 32, 0.4);
   }
 
   .hero-intro {
@@ -351,16 +364,32 @@ body {
     right: var(--gutter);
     width: auto;
     bottom: calc(2rem + env(safe-area-inset-bottom));
-    color: var(--mobile-copy);
-    text-shadow: 0 1px 14px rgba(8, 16, 32, 0.35);
+    color: var(--mobile-dark);
   }
 
   .hero-tagline {
     top: 55%;
     bottom: auto;
     right: var(--gutter);
-    color: var(--mobile-copy);
-    text-shadow: 0 1px 14px rgba(8, 16, 32, 0.35);
+    color: var(--mobile-light);
+    text-shadow: 0 1px 14px rgba(8, 16, 32, 0.45);
+  }
+
+  .hero-social a {
+    color: var(--mobile-dark);
+    text-shadow: none;
+  }
+}
+
+/* Short phones: tighten the copy so tagline, links and intro never collide */
+@media (max-width: 767px) and (max-height: 760px) and (orientation: portrait) {
+  .hero-intro p {
+    font-size: 0.92rem;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+  }
+  .hero-tagline {
+    top: 50%;
   }
 }
 
